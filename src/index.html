@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>to-do-Ts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <link rel="stylesheet" href="./index.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {},
+            },
+        };
+    </script>
+</head>
+
+<body>
+    <div class="Container w-full max-w-[1200px] m-auto p-3">
+        <div class="border rounded-2xl bg-gradient-to-br from-cyan-100 to-purple-200 p-3">
+            <h1>Bem vindo</h1>
+            <hr class="border-gray-400 mt-4" />
+            <div class="relative">
+                <div id="modal1" class="absolute hidden overflow-y-auto h-80 rounded-xl shadow-lg w-full z-10 top-10 max-w-[900px] p-4 bg-white">
+                    <div class="flex flex-col items-start gap-2">
+                        <input  placeholder="Título da Tarefa" class="task outline-none  rounded-lg border w-full p-3" type="text" />
+                        <div class="newInputTask flex gap-3 flex-wrap"></div>
+                        <div onclick="addInput()" class="flex items-center gap-3 cursor-pointer addSubTasks">
+                            <h1>Adicionar sub tarefas</h1>
+                            <div class="bg-gray-200 rounded-full w-5 h-5 flex items-center justify-center">
+                                <p class="text-white -translate-y-[2px]">+</p>
+                            </div>
+                        </div>
+                        <div class=" gap-2">
+                            <button onclick="openModal(3)"
+                                class="bg-red-400 w-48 p-2 text-white rounded-lg">Fechar</button>
+                            <button onclick="saveTask();" class="bg-blue-400 w-48 p-2 text-white rounded-lg">Adicionar
+                                tarefa</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center md:gap-10 gap-5 mt-10 cursor-pointer">
+                    <div class="AddNew flex items-center gap-2" onclick="openModal(1)">
+                        <div
+                            class="border-gray-400 border text-gray-400 rounded-full w-4 h-4 flex justify-center font-bold text-gray-border-gray-400 items-center">
+                            <p class="-translate-y-[2px]">+</p>
+                        </div>
+                        <p class="text-gray-400 openModal ">Adicionar Novo</p>
+                    </div>
+                    <h1 class="text-blue-900 font-semibold">A fazer (4)</h1>
+                    <h1 class="text-blue-900 font-semibold">Em progresso (5)</h1>
+                </div>
+            </div>
+            <div class="allPlans flex flex-wrap gap-2"></div>
+        </div>
+    </div>
+    <script src="/dist/index.js"></script>
+</body>
+
+</html>

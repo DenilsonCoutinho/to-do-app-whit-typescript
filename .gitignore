@@ -1,0 +1,12 @@
+# Arquivos temporários
+*.tmp
+
+# Diretórios a serem ignorados
+node_modules/
+build/
+
+# Arquivos específicos
+config.json
+
+# Arquivos de log
+*.log

@@ -1,30 +1,13 @@
 const date = new Date().toLocaleDateString()
+let subTasks: NodeListOf<HTMLElement> | any = document.querySelector('.addSubTasks')
+let newInputTask: NodeListOf<HTMLElement> | any = document.querySelector('.newInputTask')
+let task: NodeListOf<HTMLElement> | any = document.querySelector('.task')
+let buttonAdd: NodeListOf<HTMLElement> | any = document.querySelector('.buttonAdd')
+let lengthZero: NodeListOf<HTMLElement> | any = document.querySelector('.whileLengthZero')
+let listSubTasks: any[] = []
+let objectData: any[] = []
+let allDataTask: any[] = []
 
-const list: any = [
-    {
-        title: "corrida matinal",
-        date: date,
-        toDid: 6,
-        did: 5
-    },
-    {
-        title: "corrida matinal",
-        date: date,
-        toDid: 11,
-        did: 2
-    }, {
-        title: "corrida matinal",
-        date: date,
-        toDid: 11,
-        did: 2
-    }
-    , {
-        title: "corrida matinal",
-        date: date,
-        toDid: 11,
-        did: 2
-    }
-]
 
 function openModal(id?: number): void {
     const modal1 = document.getElementById('modal1');
@@ -42,16 +25,6 @@ function openModal(id?: number): void {
         modal2.classList.add('hidden');
     }
 }
-addEventListener
-let subTasks: NodeListOf<HTMLElement> | any = document.querySelector('.addSubTasks')
-let newInputTask: NodeListOf<HTMLElement> | any = document.querySelector('.newInputTask')
-let task: NodeListOf<HTMLElement> | any = document.querySelector('.task')
-let buttonAdd: NodeListOf<HTMLElement> | any = document.querySelector('.buttonAdd')
-let lengthZero: NodeListOf<HTMLElement> | any = document.querySelector('.whileLengthZero')
-let listSubTasks: any[] = []
-let objectData: any[] = []
-let allDataTask: any[] = []
-
 function observerTask() {
     console.log('aqui', allDataTask)
     if (allDataTask.length > 0) {
@@ -60,7 +33,7 @@ function observerTask() {
 }
 
 function editTask(){
-    
+
 }
 function viewCurrentToDo() {
     const currentPlans: NodeListOf<HTMLElement> | any = document.querySelector('.allPlans')
@@ -133,7 +106,7 @@ function addInput(): void {
 function viewCurrentSubTask() {
     newInputTask.innerHTML = objectData.map((obj, index) => {
         return ` <div  class="flex gap-2 items-center">
-        <input value="${obj.subTasks}" onchange="updateSubTasks(${obj.id}, this.value)" placeholder="Adicionar subtarefas" class="outline-none  h-8 rounded-lg border w-44 p-2 " type="text"/>
+        <input value="${obj.subTasks}" onchange="removeSubTask(${obj.id}, this.value)" placeholder="Adicionar subtarefas" class="outline-none  h-8 rounded-lg border w-44 p-2 " type="text"/>
         <div class="flex items-center gap-2">
         <button onclick="removeData(${obj.id})" class=" h-8 w-10 bg-red-400 flex justify-center items-center text-white rounded-lg">X</button>
         </div>
@@ -142,7 +115,7 @@ function viewCurrentSubTask() {
     }).join('');
 }
 
-function updateSubTasks(id: number, value: string): void {
+function removeSubTask(id: number, value: string): void {
     const index = objectData.findIndex(item => item.id === id);
     if (index !== -1) {
         objectData[index].subTasks = value;

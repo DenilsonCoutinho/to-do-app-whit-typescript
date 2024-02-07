@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "tippy.js": "^6.3.7",
     "undici-types": "^6.6.0",
     "uuid": "^9.0.1"
   }

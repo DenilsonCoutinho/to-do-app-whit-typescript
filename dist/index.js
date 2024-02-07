@@ -1,29 +1,9 @@
 const date = new Date().toLocaleDateString();
-const list = [
-    {
-        title: "corrida matinal",
-        date: date,
-        toDid: 6,
-        did: 5
-    },
-    {
-        title: "corrida matinal",
-        date: date,
-        toDid: 11,
-        did: 2
-    }, {
-        title: "corrida matinal",
-        date: date,
-        toDid: 11,
-        did: 2
-    },
-    {
-        title: "corrida matinal",
-        date: date,
-        toDid: 11,
-        did: 2
-    }
-];
+let newInputTask = document.querySelector('.newInputTask');
+let task = document.querySelector('.task');
+let lengthZero = document.querySelector('.whileLengthZero');
+const storedTasks = JSON.parse(localStorage.getItem('myTask'));
+const allDataTask = storedTasks ? storedTasks : [];
 function openModal(id) {
     const modal1 = document.getElementById('modal1');
     const modal2 = document.getElementById('modal2');
@@ -40,48 +20,70 @@ function openModal(id) {
         modal2.classList.add('hidden');
     }
 }
-addEventListener;
-let subTasks = document.querySelector('.addSubTasks');
-let newInputTask = document.querySelector('.newInputTask');
-let task = document.querySelector('.task');
-let buttonAdd = document.querySelector('.buttonAdd');
-let lengthZero = document.querySelector('.whileLengthZero');
-let listSubTasks = [];
-let objectData = [];
-let allDataTask = [];
 function observerTask() {
-    console.log('aqui', allDataTask);
     if (allDataTask.length > 0) {
         lengthZero.classList.add('hidden');
     }
 }
-function editTask() {
+observerTask();
+function deleteToDo(i) {
+    console.log(i);
+    allDataTask.splice(i, 1);
+    localStorage.setItem("myTask", JSON.stringify(allDataTask));
+    viewCurrentToDo();
+}
+function taskDone(i) {
+    allDataTask[i].done = true;
+    localStorage.setItem("myTask", JSON.stringify(allDataTask));
+    console.log(allDataTask[i]);
+    viewCurrentToDo();
 }
 function viewCurrentToDo() {
     const currentPlans = document.querySelector('.allPlans');
-    document.querySelector('.to-do').innerHTML = allDataTask.length.toString();
-    currentPlans.innerHTML = allDataTask.map((i) => {
-        let taskDone = i.subTasks.filter(task => task.done !== false);
-        console.log('done', taskDone);
+    document.querySelector('.to-do').innerHTML = JSON.parse(localStorage.getItem('myTask')).length.toString();
+    currentPlans.innerHTML = JSON.parse(localStorage.getItem('myTask')).map((i, index) => {
         return `
-        <div key={i.title} class="w-full max-w-[300px] cursor-pointer bg-white hover:duration-300 hover:scale-105 mt-5 p-5 border-white  rounded-lg">
+        <div  key=${i.title}  class="w-full max-w-[300px]  bg-white hover:duration-300 hover:scale-102 mt-5 p-5 border-white  rounded-lg">
                     <h1 class="font-medium">${i.title}</h1>
                     <div class="flex flex-col">
                         <div class="flex justify-between">
                             <div class="flex items-center">
                                 <lord-icon src="https://cdn.lordicon.com/uecgmesg.json" trigger="loop"style="width:20px;height:20px">
                                 </lord-icon>
-                                <p class="text-xs text-gray-400">Progresso</p>
+                                <p class="text-xs text-gray-400">Status</p>
                             </div>
-                            <p class="text-xs font-semibold">${taskDone.length}/${i.subTasks.length}</p>
+                            <div class="p-1 rounded-3xl ${i.done === true ? 'bg-green-500' : 'bg-gray-300'}  "><p class="text-white text-xs">Em aberto</p></div>
                         </div>
-                        <div class=" h-1 w-full relative bg-gray-400 rounded-xl my-3">
-                            <div class="h-1 w-[${(taskDone.length / i?.subTasks.length) * 100}%] absolute bg-green-500 rounded-xl duration-150"></div>
+                        <div class=" h-1 w-full relative bg-gray-400 rounded-xl  duration-150 my-3">
+                            <div class="h-1 w-[${i.done === true ? '100%' : ''}] absolute bg-green-500 rounded-xl duration-150"></div>
                         </div>
                     </div>
-                <div class="bg-gray-100 rounded-2xl p-1 w-20">
-                     <h1 class="text-xs text-gray-600">${i.date}</h1
-                </div>
+                    <div class="flex justify-between items-center">
+                        <div class="bg-gray-100 rounded-2xl p-1 w-20">
+                             <h1 class="text-xs text-gray-600">${i.date}</h1>
+                        </div>
+                        <div class="flex gap-1 items-center">
+                        <button id="myButtonClose" onclick="deleteToDo(${index})" class="bg-red-600 text-white cursor-pointer rounded-full flex justify-center items-center w-7 h-7">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/drxwpfop.json"
+                            trigger="hover"
+                            colors="primary:#fff,secondary:#fff"
+                            
+                            style="width:25px;height:25px">
+                        </lord-icon>
+                        </button>
+                        <button id="myButtonDone" onclick="taskDone(${index})" class="bg-green-600 cursor-pointer rounded-full flex justify-center items-center w-7 h-7">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/cgzlioyf.json"
+                                trigger="hover"
+                                stroke="bold"
+                                colors="primary:#fff"
+                                class="borde"
+                                style="width:25px;height:25px">
+                            </lord-icon>
+                        </button>
+                    </div>
+                    </div>
                 </div>
         </div>
          `;
@@ -89,7 +91,6 @@ function viewCurrentToDo() {
 }
 viewCurrentToDo();
 function saveTask() {
-    let onlyObjects = objectData.filter(item => typeof item === 'object');
     if (task.value === '') {
         alert('Tá vazio');
     }
@@ -97,49 +98,14 @@ function saveTask() {
         allDataTask.push({
             id: Math.random(),
             title: task.value,
-            subTasks: onlyObjects,
             done: false,
             date: date
         });
+        localStorage.setItem("myTask", JSON.stringify(allDataTask));
     }
-    objectData = [];
-    console.log("aq", objectData);
     observerTask();
     viewCurrentToDo();
-    viewCurrentSubTask();
-}
-function addInput() {
-    idWithTime++;
-    let object = {
-        id: idWithTime,
-        subTasks: '',
-        done: true,
-    };
-    objectData.push(object);
-    console.log(objectData);
-    viewCurrentSubTask();
-}
-function viewCurrentSubTask() {
-    newInputTask.innerHTML = objectData.map((obj, index) => {
-        return ` <div  class="flex gap-2 items-center">
-        <input value="${obj.subTasks}" onchange="updateSubTasks(${obj.id}, this.value)" placeholder="Adicionar subtarefas" class="outline-none  h-8 rounded-lg border w-44 p-2 " type="text"/>
-        <div class="flex items-center gap-2">
-        <button onclick="removeData(${obj.id})" class=" h-8 w-10 bg-red-400 flex justify-center items-center text-white rounded-lg">X</button>
-        </div>
-        </div>
-        `;
-    }).join('');
-}
-function updateSubTasks(id, value) {
-    const index = objectData.findIndex(item => item.id === id);
-    if (index !== -1) {
-        objectData[index].subTasks = value;
-    }
-}
-function removeData(obj) {
-    console.log(obj);
-    objectData = objectData.filter(item => item.id !== obj);
-    viewCurrentSubTask();
+    task.value == '';
 }
 function generateIdWithTime() {
     const now = new Date();

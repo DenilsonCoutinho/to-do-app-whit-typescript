@@ -23,20 +23,16 @@
             <h1>Bem vindo</h1>
             <hr class="border-gray-400 mt-4" />
             <div class="relative">
-                <div id="modal1" class="absolute hidden overflow-y-auto h-80 rounded-xl shadow-lg w-full z-10 top-10 max-w-[900px] p-4 bg-white">
+                <div id="modal1"
+                    class="absolute hidden overflow-y-auto h-80 rounded-xl shadow-lg w-full z-10 top-10 max-w-[900px] p-4 bg-white">
                     <div class="flex flex-col items-start gap-2">
-                        <input  placeholder="Título da Tarefa" class="task outline-none  rounded-lg border w-full p-3" type="text" />
-                        <div class="newInputTask flex gap-3 flex-wrap"></div>
-                        <div onclick="addInput()" class="flex items-center gap-3 cursor-pointer addSubTasks">
-                            <h1>Adicionar sub tarefas</h1>
-                            <div class="bg-gray-200 rounded-full w-5 h-5 flex items-center justify-center">
-                                <p class="text-white -translate-y-[2px]">+</p>
-                            </div>
-                        </div>
+                        <input placeholder="Título da Tarefa" class="task outline-none  rounded-lg border w-full p-3"
+                            type="text" />
                         <div class=" gap-2">
                             <button onclick="openModal(3)"
                                 class="bg-red-400 w-48 p-2 text-white rounded-lg">Fechar</button>
-                            <button onclick="saveTask();" class="bg-blue-400 w-48 p-2 text-white rounded-lg">Adicionar
+                            <button onclick="saveTask();openModal(3)"
+                                class="bg-blue-400 w-48 p-2 text-white rounded-lg">Adicionar
                                 tarefa</button>
                         </div>
                     </div>
@@ -50,21 +46,32 @@
                         </div>
                         <p class="text-gray-400 openModal ">Adicionar Novo</p>
                     </div>
-                    <h1  class="text-blue-900  font-semibold">A fazer (<span class="to-do"></span>)</h1>
+                    <h1 class="text-blue-900  font-semibold">A fazer (<span class="to-do"></span>)</h1>
                     <!-- <h1 class="text-blue-900 font-semibold">Em progresso (5)</h1> -->
                 </div>
             </div>
-            <div class="allPlans flex flex-wrap gap-2"></div>
-            <div  class="bg-white h-96 mt-2 whileLengthZero  justify-center items-center w-full p-4 rounded-2xl flex flex-wrap gap-2">
-                <h1 class="text-blue-900 ">Adicione uma tarefa</h1> 
+            <div class="allPlans flex flex-wrap gap-2">
+
+            </div>
+
+            <div
+                class="bg-white h-96 mt-2 whileLengthZero  justify-center items-center w-full p-4 rounded-2xl flex flex-wrap gap-2">
+                <h1 class="text-blue-900 ">Adicione uma tarefa</h1>
             </div>
         </div>
     </div>
-    <div class="fixed flex items-center justify-center w-full ">
-        <div class=" bg-white h-96 w-96 z-20 -translate-y-96 relative"></div>
-        <div class="bg-slate-700 opacity-65 h-full w-full top-0 fixed z-10 "></div>
-    </div>
+
     <script src="/dist/index.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+    <script>
+        tippy('#myButtonDone', {
+            content: 'Feito',
+        });
+        tippy('#myButtonClose', {
+            content: 'Excluir',
+        });
+    </script>
 </body>
 
 </html>
